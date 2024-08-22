@@ -1,21 +1,21 @@
-terraform {
-  required_providers {
-    alicloud = {
-      source = "hashicorp/alicloud"
-      version = "1.93.0"
-    }
-  }
+provider "alicloud" {
+  configuration_source = "terraform-provider-alicloud/examples/vpc"
 }
 
-resource "alicloud_vpc" "vpc" {
-  name       = "tcloud-resource"
-  cidr_block = "10.0.0.0/16"
+resource "alicloud_vpc" "main" {
+  # VPC name
+  name       = "alicloud"
+  # CIDR block of the VPC
+  cidr_block = "10.1.0.0/21"
 }
 
-resource "alicloud_vswitch" "vsw-web" {
-  name              = "subnet-tcloud"
-  vpc_id            = alicloud_vpc.vpc.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "ap-southeast-1b"
+resource "alicloud_vswitch" "main" {
+  # VPC ID
+  vpc_id            = alicloud_vpc.main.id
+  # CIDR block of the VSwitch
+  cidr_block        = "10.1.0.0/24"
+  # Zone
+  availability_zone = "cn-hangzhou-b"
+  # Dependent resource (this dependent resource will be created first)
+  depends_on = [alicloud_vpc.main]
 }
-
