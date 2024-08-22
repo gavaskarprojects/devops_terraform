@@ -15,7 +15,7 @@ resource "alicloud_vswitch" "main" {
   # CIDR block of the VSwitch
   cidr_block        = "10.1.0.0/24"
   # Zone
-  availability_zone = "cn-hangzhou-b"
+  availability_zone = "ap-southeast-1a"
   # Dependent resource (this dependent resource will be created first)
   depends_on = [alicloud_vpc.main]
 }
